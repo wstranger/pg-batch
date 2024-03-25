@@ -156,7 +156,7 @@ def connect(host, user, port, password, database):
         raise RuntimeError('Error: PostgreSQL connection failed.')
 
 
-def execute(host, user, port, password, database, action, table, where, set_=None, no_confirm=False, primary_key='id', read_batch_size=10000, write_batch_size=50, sleep=0):
+def execute(host, user, port, password, database, action, table, where, join='', set_=None, no_confirm=False, primary_key='id', read_batch_size=10000, write_batch_size=50, sleep=0):
     """
         Execute batch update or delete
     """
@@ -183,7 +183,7 @@ def execute(host, user, port, password, database, action, table, where, set_=Non
             while 1:  # Infinite loop, will be broken by sys.exit()
                 # Get rows to modify
                 print("* Selecting data...")
-                sql = "SELECT {0} as id FROM ".format(primary_key) + table + " WHERE " + where + \
+                sql = "SELECT {0} as id FROM {1} {2} WHERE {3}".format(primary_key, table, join, where) + "" \
                     " AND {0} > %s ORDER BY {1} LIMIT %s".format(
                         primary_key, primary_key)
                 print("   query: " + sql % (min_id, read_batch_size))
@@ -269,6 +269,8 @@ def main():
                         help="Action ('update' or 'delete')")
     parser.add_argument("-n", "--no_confirm", action='store_true',
                         help="Don't ask for confirmation before to run the write queries")
+    parser.add_argument("-j", "--join", default='',
+                        help='Select JOIN clause')
     args = parser.parse_args()
 
     execute(host=args.host,
@@ -284,6 +286,7 @@ def main():
             primary_key=args.primary_key,
             read_batch_size=args.read_batch_size,
             write_batch_size=args.write_batch_size,
+            join=args.join,
             sleep=args.sleep
             )
 

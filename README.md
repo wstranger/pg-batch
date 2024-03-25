@@ -109,7 +109,7 @@ Output sample:
 usage: pg_batch [-h] [-H HOST] [-P PORT] -U USER [-p PASSWORD] -d DATABASE -t
                 TABLE [-id PRIMARY_KEY] -w WHERE [-s SET]
                 [-rbz READ_BATCH_SIZE] [-wbz WRITE_BATCH_SIZE] [-S SLEEP]
-                [-a {update,delete}] [-n]
+                [-a {update,delete}] [-n] [-j JOIN]
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -137,6 +137,7 @@ optional arguments:
                         Action ('update' or 'delete')
   -n, --no_confirm      Don't ask for confirmation before to run the write
                         queries
+  -j JOIN, --join JOIN  Select JOIN clause                        
 ```
 
 ## License

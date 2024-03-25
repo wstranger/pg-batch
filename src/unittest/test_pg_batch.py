@@ -166,3 +166,12 @@ class Test(unittest.TestCase):
                           table='batch_test',
                           where='date IS NULL',
                           no_confirm=True)
+
+    def test_delete_with_join(self):
+        self.assertTrue(pg_batch.execute(self.host, self.user, self.port, self.password, self.database,
+                        action='delete',
+                        table='batch_test',
+                        primary_key='batch_test.id',
+                        join='LEFT JOIN batch_test_join ON batch_test.join_id=batch_test_join.id',
+                        where='batch_test_join.number > 1500',
+                        no_confirm=True))

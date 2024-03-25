@@ -4,7 +4,7 @@ import pypandoc
 
 setup(
     name='pg_batch',
-    version='1.1.1',
+    version='1.2.1',
     description='Run large PostgreSQL UPDATE and DELETE queries with small batches to prevent locks',
     long_description=pypandoc.convert_file('README.md', 'rst'),
     author='Gabriel Bordeaux',
